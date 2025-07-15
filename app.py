@@ -30,35 +30,45 @@ def fuzzy_search(name, choices, threshold=72):
 def search():
     data = request.get_json()
     input_name = data.get('name', '').strip().lower()
-
-    if (not input_name):
+    
+    if not input_name:
         return jsonify({'error': 'No name provided, enter a name to search'}), 400
 
-    #matching the names entered in brands csv
+    # Search in brands
     match_name = fuzzy_search(input_name, brands_names)
     if match_name:
         row = brands[brands['name_lower'] == match_name]
         if (not row.empty):
-            result = row.drop(columns=brands_to_rem + ['name_lower']).iloc[0].to_dict()
+            result = (
+                row.drop(columns=brands_to_rem + ['name_lower'])
+                .iloc[0]
+                .where(pd.notnull, None)
+                .to_dict()
+            )
             return jsonify({
                 'source': 'brands',
-                'match': row.iloc[0]['name'], 
+                'match': row.iloc[0]['name'],
                 'data': result
             })
 
-    #matching the names entered in companies csv if not found in brands
+    # Search in companies
     match_name = fuzzy_search(input_name, companies_names)
-    if (match_name):
+    if match_name:
         row = companies[companies['name_lower'] == match_name]
         if (not row.empty):
-            result = row.drop(columns=companies_to_rem + ['name_lower']).iloc[0].to_dict()
+            result = (
+                row.drop(columns=companies_to_rem + ['name_lower'])
+                .iloc[0]
+                .where(pd.notnull, None)
+                .to_dict()
+            )
             return jsonify({
                 'source': 'companies',
-                'match': row.iloc[0]['name'],  
+                'match': row.iloc[0]['name'],
                 'data': result
             })
 
-    return jsonify({'error': 'Please provide a name to search.'}), 400
+    return jsonify({'result': 'Not in our list. There is high probability that the product is not in boycott list'}), 200
 
 @app.route('/')
 def index():
