@@ -4,6 +4,7 @@ import pandas as pd
 from rapidfuzz import process, fuzz
 import os
 from models import db, Feedback, Service
+from sqlalchemy import or_, func
 
 app = Flask(__name__)
 CORS(app) 
@@ -195,6 +196,120 @@ def feedback():
 @app.route('/usage')
 def usage():
     return render_template('usage.html')
+
+@app.route('/service', methods=['GET'])
+def suggest_services():
+    name = request.args.get('name', '').strip()
+    
+    query = Service.query.filter(
+        or_(
+            Service.Service.ilike(f"%{name}%"),
+            Service.Service_Type.ilike(f"%{name}%")
+        )
+    )
+    matches = query.limit(10).all()
+    
+    return jsonify([{
+        "Service_Name": s.Service,
+        "Service_Type": s.Service_Type,
+        "Service_Provider": s.Service_Provider_Name,
+        "Feature_1": s.Top_B_Feature_1,
+        "Feature_2": s.Top_B_Feature_2
+    } for s in matches])
+
+@app.route('/service', methods=['POST'])
+def suggest_replacements():
+    data = request.json
+    
+    domain = data.get('domain')
+    service_name = data.get('name')
+    service_type = data.get('type')
+    
+    if not all([domain, service_name, service_type]):
+        return jsonify({"error": "Missing domain, type, or name"}), 400
+    
+    # Get selected service
+    selected = Service.query.filter_by(Service=service_name, Service_Type=service_type).first()
+    if not selected:
+        return jsonify({"error": "Invalid Service selected"}), 404
+    
+    # 'Other' domain case
+    if domain.lower() == 'other':
+        # Average score of selected service
+        selected_avg = (
+            (selected.Education_Score or 0) +
+            (selected.Health_Score or 0) +
+            (selected.Finance_Score or 0) +
+            (selected.Tech_Score or 0)
+        ) / 4.0
+
+        # Get all same-type services with better (lower) average score
+        suggestions = Service.query.filter(
+            Service.Service_Type == service_type
+        ).filter(
+            (
+                (func.coalesce(Service.Education_Score, 0) +
+                 func.coalesce(Service.Health_Score, 0) +
+                 func.coalesce(Service.Finance_Score, 0) +
+                 func.coalesce(Service.Tech_Score, 0)) / 4.0
+                <= selected_avg
+            )
+            # Service.Service != service_name  # exclude original
+        ).order_by(
+            (func.coalesce(Service.Education_Score, 0) +
+             func.coalesce(Service.Health_Score, 0) +
+             func.coalesce(Service.Finance_Score, 0) +
+             func.coalesce(Service.Tech_Score, 0)) / 4.0
+        ).all()
+
+        return jsonify([{
+            "Service_Name": s.Service,
+            "Service_Provider": s.Service_Provider_Name,
+            "Service_Type": s.Service_Type,
+            "Score": round((
+                (s.Education_Score or 0) +
+                (s.Health_Score or 0) +
+                (s.Finance_Score or 0) +
+                (s.Tech_Score or 0)
+            ) / 4.0, 2),
+            "Description": s.Description,
+            "average_monthly_running_cost": s.average_monthly_running_cost,
+            "Feature_1": s.Top_B_Feature_1,
+            "Feature_2": s.Top_B_Feature_2
+        } for s in suggestions])
+    
+    # Normal domain case (education, health, finance, tech)
+    # Domain column mapping
+    domain_column_map = {
+        "education": Service.Education_Score,
+        "health": Service.Health_Score,
+        "finance": Service.Finance_Score,
+        "tech": Service.Tech_Score
+    }
+    
+    if domain not in domain_column_map:
+        return jsonify({"error": "Invalid domain"}), 400
+    
+    domain_col = domain_column_map[domain]
+    selected_score = getattr(selected, f"{domain.capitalize()}_Score")
+    
+    # Get alternatives with better domain score
+    suggestions = Service.query.filter(
+        Service.Service_Type == service_type,
+        domain_col <= selected_score
+        # Service.Service != service_name  # exclude original
+    ).order_by(domain_col).all()
+    
+    return jsonify([{
+        "Service_Name": s.Service,
+        "Service_Provider": s.Service_Provider_Name,
+        "Service_Type": s.Service_Type,
+        "Score": getattr(s, f"{domain.capitalize()}_Score"),
+        "Description": s.Description,
+        "average_monthly_running_cost": s.average_monthly_running_cost,
+        "Feature_1": s.Top_B_Feature_1,
+        "Feature_2": s.Top_B_Feature_2
+    } for s in suggestions])
 
 @app.route('/')
 def index():

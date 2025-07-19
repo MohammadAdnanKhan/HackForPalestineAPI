@@ -30,12 +30,44 @@
     .section {
       margin-bottom: 2rem;
     }
+
+    .breaker {
+      display: flex;
+      align-items: center;
+      text-align: center;
+      margin: 3rem 0;
+    }
+
+    .breaker::before,
+    .breaker::after {
+      content: "";
+      flex: 1;
+      border-bottom: 2px solid #ccc;
+    }
+
+    .breaker:not(:empty)::before {
+      margin-right: 1rem;
+    }
+
+    .breaker:not(:empty)::after {
+      margin-left: 1rem;
+    }
+
+    .breaker-label {
+      font-weight: bold;
+      color: #6c757d;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      font-size: 0.9rem;
+    }
   </style>
 </head>
 
 <body>
 
   <h1>API Usage Guide</h1>
+
+  <div class="breaker"><span class="breaker-label">POST : Search API</span></div>
 
   <div class="section">
     <h2>🔍 POST /search</h2>
@@ -44,6 +76,8 @@
     "name": "example keyword"
 }</code></pre>
   </div>
+
+  <div class="breaker"><span class="breaker-label">POST : Feedback API</span></div>
 
   <div class="section">
     <h2>📥 POST /feedback</h2>
@@ -88,6 +122,8 @@
     </p>
   </div>
 
+  <div class="breaker"><span class="breaker-label">GET : Feedback API</span></div>
+
   <div class="section">
     <h2>📤 GET /feedback</h2>
     <p><strong>Required JSON Body Parameter:</strong> <code>category</code> (string)</p>
@@ -105,6 +141,60 @@
     </ul>
     </p>
   </div>
+
+  <div class="breaker"><span class="breaker-label">GET : Service API</span></div>
+
+  <div class="section">
+    <h2>🔧 GET /service</h2>
+    <p>Used to fetch service suggestions for live search/autocomplete.</p>
+    <p><strong>Query Parameters:</strong></p>
+    <ul>
+      <li><code>name</code> (string) partial input string (min 3 characters recommended)</li>
+    </ul>
+    <p><strong>Response:</strong> Returns a list of services that match the name or type.</p>
+    <pre><code>[
+  {
+    "Service_Name": "Gmail",
+    "Service_Type": "Business Email",
+    "Service_Provider": "Google",
+    "Feature_1": "Calendar Support",
+    "Feature_2": "Custom Domain Support"
+  },
+  ...
+]</code></pre>
+  </div>
+
+  <div class="breaker"><span class="breaker-label">POST : Service API</span></div>
+
+  <div class="section">
+    <h2>🔧 POST /service</h2>
+    <p>Used to get alternative services with a better score in the selected domain.</p>
+    <p><strong>Required JSON Body:</strong></p>
+    <pre><code>{
+  "name": "Gmail",
+  "type": "Business Email",
+  "domain": "health"
+}</code></pre>
+    <p><strong>Valid domain options:</strong> <code>education</code>, <code>health</code>, <code>finance</code>,
+      <code>tech</code>, <code>other</code>
+    </p>
+    <p><strong>Response:</strong> Returns services with the same type and a better score in the selected domain.</p>
+    <pre><code>[
+  {
+    "Service_Name": "ProtonMail",
+    "Service_Provider": "Proton",
+    "Service_Type": "Business Email",
+    "Score": 9.0,
+    "Description": "A privacy-first email provider .....",
+    "average_monthly_running_cost": 5.0,
+    "Feature_1": "Calendar Support",
+    "Feature_2": "Custom Domain Support"
+  },
+  ...
+]</code></pre>
+  </div>
+
+  <div class="breaker"><span class="breaker-label">END</span></div>
 
 </body>
 
