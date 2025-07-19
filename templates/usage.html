@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <title>API Usage</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      margin: 2rem;
+      background-color: #f8f9fa;
+    }
+
+    h1,
+    h2 {
+      color: #343a40;
+    }
+
+    pre {
+      background: #f1f1f1;
+      padding: 1em;
+      border-radius: 5px;
+      overflow-x: auto;
+    }
+
+    code {
+      font-family: Consolas, monospace;
+    }
+
+    .section {
+      margin-bottom: 2rem;
+    }
+  </style>
+</head>
+
+<body>
+
+  <h1>API Usage Guide</h1>
+
+  <div class="section">
+    <h2>🔍 POST /search</h2>
+    <p><strong>Required Body Parameter:</strong> <code>name</code> (string)</p>
+    <pre><code>{
+    "name": "example keyword"
+}</code></pre>
+  </div>
+
+  <div class="section">
+    <h2>📥 POST /feedback</h2>
+    <p><strong>Required Body Parameters:</strong></p>
+    <pre><code>{
+    "name": "",
+    "email": "",
+    "category": "",
+    "contentIss": {
+        "name": "",
+        "description": "",
+        "type": "",
+        "link": ""
+    },
+    "feature": {
+        "description": "",
+        "where": ""
+    },
+    "uiIss": {
+        "work": "",
+        "wrong": "",
+        "device": ""
+    },
+    "trustConcern": {
+        "issueWith": "",
+        "why": "",
+        "link": ""
+    },
+    "other": {
+        "message": ""
+    }
+}</code></pre>
+    <p># Only the object matching the <code>category</code> needs to be filled. Others can be left empty.</p>
+    <p># category can be one of the follwing:
+    <ul>
+      <li><code>"Content Issue"</code></li>
+      <li><code>"Feature Request"</code></li>
+      <li><code>"UI/UX Problem"</code></li>
+      <li><code>"Trustworthiness Concern"</code></li>
+      <li><code>"Other"</code></li>
+    </ul>
+    </p>
+  </div>
+
+  <div class="section">
+    <h2>📤 GET /feedback</h2>
+    <p><strong>Required JSON Body Parameter:</strong> <code>category</code> (string)</p>
+    <pre><code>{
+    "category": "Content Issue"
+}</code></pre>
+    <p>Returns all feedback entries matching the specified category.</p>
+    <p># category can be one of the follwing:
+    <ul>
+      <li><code>"Content Issue"</code></li>
+      <li><code>"Feature Request"</code></li>
+      <li><code>"UI/UX Problem"</code></li>
+      <li><code>"Trustworthiness Concern"</code></li>
+      <li><code>"Other"</code></li>
+    </ul>
+    </p>
+  </div>
+
+</body>
+
+</html>
