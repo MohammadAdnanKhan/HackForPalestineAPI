@@ -1,0 +1,41 @@
+Service,Service Provider Name,Service Type,Data Privacy,Carbon Footprint,Labor Practices,War Crimes Complicity,Dependency_in_Education,Education_Score,Dependency_in_Healthcare,Health_Score,Dependency_in_Tech,Tech_Score,Dependency_in_Finance,Finance_Score
+Gmail,Google,Business Email,4,3,3,4,5,27,5,27,5,27,5,27
+ProtonMail,Proton,Business Email,1,2,2,1,2,9,2,9,3,7,2,9
+Zoho Mail,Zoho,Business Email,3,3,3,1,2,18,2,18,3,16,2,18
+Outlook,Microsoft,Business Email,3,3,3,4,5,24,5,24,5,24,5,24
+Google Cloud,Google,Cloud Infrastructure,4,3,3,5,5,31,5,31,5,31,5,31
+Amazon AWS,Amazon,Cloud Infrastructure,4,4,4,5,5,34,5,34,5,34,5,34
+Microsoft Azure,Microsoft,Cloud Infrastructure,3,3,3,5,5,28,5,28,5,28,5,28
+DigitalOcean,DigitalOcean,Cloud Infrastructure,3,3,3,2,2,22,2,22,3,20,3,20
+Linode,Akamai,Cloud Infrastructure,3,3,3,2,2,22,2,22,3,20,3,20
+Vultr,Vultr,Cloud Infrastructure,3,3,3,2,2,22,2,22,3,20,3,20
+Hetzner,Hetzner,Cloud Infrastructure,3,2,3,1,2,16,2,16,3,14,3,14
+Scaleway,Scaleway,Cloud Infrastructure,3,2,3,1,2,16,2,16,3,14,3,14
+ChatGPT,OpenAI,LLM,4,4,3,5,5,33,5,33,5,33,5,33
+Gemini,Google DeepMind,LLM,4,3,3,5,5,31,5,31,5,31,5,31
+Claude,Anthropic,LLM,2,2,2,4,4,20,4,20,5,18,4,20
+Hugging Face Hub,Hugging Face,LLM,2,2,2,1,4,8,4,8,4,8,3,10
+Mistral,Mistral.ai,LLM,2,3,2,2,3,16,3,16,4,14,3,16
+Falcon,TII (UAE Gov),LLM,3,5,4,4,4,31,4,31,4,31,3,33
+BLOOM,BigScience,LLM,1,2,1,1,2,8,2,8,3,6,2,8
+GPT-NeoX / GPT-J,EleutherAI,LLM,1,2,1,1,2,8,2,8,3,6,2,8
+OpenLLaMA,Berkeley/Community,LLM,1,2,1,1,2,8,2,8,3,6,2,8
+PayPal,PayPal Holdings,Online Payments,4,4,4,3,3,30,3,30,4,28,5,26
+Stripe,Stripe Inc.,Online Payments,3,3,3,2,3,20,3,20,4,18,5,16
+Wise,Wise Ltd,Online Payments,3,3,3,2,2,22,2,22,3,20,4,18
+BTCPay Server,BTCPay Foundation,Online Payments,1,5,1,1,1,16,1,16,2,14,3,12
+Mollie,Mollie B.V.,Online Payments,3,3,3,2,2,22,2,22,3,20,3,20
+Dwolla,Dwolla Inc.,Online Payments,3,3,3,2,2,22,2,22,3,20,3,20
+Taler,GNU Project (FLOSS),Online Payments,1,2,1,1,1,10,1,10,2,8,2,8
+GloBee,GloBee,Online Payments,2,4,3,2,2,21,2,21,3,19,3,19
+Checkout.com,Checkout Ltd,Online Payments,3,3,3,3,2,26,2,26,3,24,3,24
+Razorpay,Razorpay Software Pvt. Ltd.,Online Payments,3,4,3,2,2,24,2,24,3,22,4,20
+Slack,Salesforce,Team Chat,3,3,3,3,4,22,4,22,4,22,4,22
+Microsoft Teams,Microsoft,Team Chat,3,3,3,4,5,24,5,24,5,24,5,24
+Google Chat,Google,Team Chat,4,3,3,4,5,27,5,27,5,27,5,27
+Mattermost,Mattermost Inc.,Team Chat,2,3,2,1,3,12,3,12,4,10,3,12
+Rocket.Chat,Rocket.Chat,Team Chat,2,3,2,1,2,14,2,14,3,12,3,12
+Zulip,Kandra Labs,Team Chat,2,2,2,1,2,12,2,12,3,10,3,10
+Discord,Discord Inc.,Team Chat,4,4,3,3,3,29,3,29,3,29,3,29
+Flock,Flock Inc.,Team Chat,3,3,3,2,2,22,2,22,3,20,3,20
+Ryver,Ryver Inc.,Team Chat,3,3,3,2,2,22,2,22,3,20,3,20
