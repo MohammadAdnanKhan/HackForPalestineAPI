@@ -1,4 +1,4 @@
-Service,Service Provider Name,Service Type,Top_B_Feature1,Top_B_Feature_2,average_monthly_running_cost,Description,Education_Score,Health_Score,Finance_Score,Tech_Score
+Service,Service Provider Name,Service Type,Top_B_Feature_1,Top_B_Feature_2,average_monthly_running_cost,Description,Education_Score,Health_Score,Finance_Score,Tech_Score
 Gmail,Google,Business Email,Calendar Support,Custom Domain Support,6.0,"Part of Google Workspace, Gmail offers seamless integration with Google Calendar, Docs, and Drive, making it ideal for teams needing collaboration and cloud storage.",27.0,27.0,27.0,27.0
 ProtonMail,Proton,Business Email,Calendar Support,Custom Domain Support,5.0,"A privacy-first email provider with end-to-end encryption, ProtonMail is built for organizations needing secure communication and GDPR-compliant infrastructure.",9.0,9.0,9.0,7.0
 Zoho Mail,Zoho,Business Email,Calendar Support,Custom Domain Support,1.0,"An affordable email service designed for startups and small businesses, offering custom domains, basic calendar, and admin controls at minimal cost.",18.0,18.0,18.0,16.0
