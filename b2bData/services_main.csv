@@ -1,0 +1,41 @@
+Service,Service Provider Name,Service Type,Top_B_Feature1,Top_B_Feature_2,average_monthly_running_cost,Description,Education_Score,Health_Score,Finance_Score,Tech_Score
+Gmail,Google,Business Email,Calendar Support,Custom Domain Support,6.0,"Part of Google Workspace, Gmail offers seamless integration with Google Calendar, Docs, and Drive, making it ideal for teams needing collaboration and cloud storage.",27.0,27.0,27.0,27.0
+ProtonMail,Proton,Business Email,Calendar Support,Custom Domain Support,5.0,"A privacy-first email provider with end-to-end encryption, ProtonMail is built for organizations needing secure communication and GDPR-compliant infrastructure.",9.0,9.0,9.0,7.0
+Zoho Mail,Zoho,Business Email,Calendar Support,Custom Domain Support,1.0,"An affordable email service designed for startups and small businesses, offering custom domains, basic calendar, and admin controls at minimal cost.",18.0,18.0,18.0,16.0
+Outlook,Microsoft,Business Email,Calendar Support,Custom Domain Support,7.0,"Outlook is part of Microsoft 365, offering deep integration with Word, Excel, Teams, and robust calendaring for enterprise-grade collaboration.",24.0,24.0,24.0,24.0
+Google Cloud,Google,Cloud Infrastructure,Scalable Compute & Storage,Advanced AI & Data Processing Capabilities,36.0,"High-scale cloud with global infra, strong ML tooling (TPUs, BigQuery, Vertex)",31.0,31.0,31.0,31.0
+Amazon AWS,Amazon,Cloud Infrastructure,Scalable Compute & Storage,Advanced AI & Data Processing Capabilities,25.0,"Massive catalog of services, flexible architecture, global scale",34.0,34.0,34.0,34.0
+Microsoft Azure,Microsoft,Cloud Infrastructure,Scalable Compute & Storage,Advanced AI & Data Processing Capabilities,28.0,"Seamless fit for enterprises using Office, Windows, AD stack",28.0,28.0,28.0,28.0
+DigitalOcean,DigitalOcean,Cloud Infrastructure,Scalable Compute & Storage,Simple UI & Developer-Friendly API,7.0,"Fast setup, predictable billing, excellent for startups/devs",22.0,22.0,20.0,20.0
+Linode,Akamai,Cloud Infrastructure,Scalable Compute & Storage,CLI Tools & Cost Transparency,5.0,"Transparent pricing, Linux-first experience, good documentation",22.0,22.0,20.0,20.0
+Vultr,Vultr,Cloud Infrastructure,Scalable Compute & Storage,IPv6 Support & Bare Metal Availability,6.0,"Edge locations, bare metal options, and flexible hourly billing",22.0,22.0,20.0,20.0
+Hetzner,Hetzner,Cloud Infrastructure,Scalable Compute & Storage,High-Performance Bare Metal,4.0,EU-based infra with very high performance-to-price ratio,16.0,16.0,14.0,14.0
+Scaleway,Scaleway,Cloud Infrastructure,Scalable Compute & Storage,Privacy-Conscious Compliance Features,6.0,"GDPR-first, France-based infra with clean UI and elasticity",16.0,16.0,14.0,14.0
+ChatGPT,OpenAI,LLM,Natural Language Understanding,Plugin Integration,3000.0,High-capability model with broad integration; BDS/ethical flagged,33.0,33.0,33.0,33.0
+Gemini,Google DeepMind,LLM,Natural Language Understanding,Plugin Integration,4000.0,Grounded web-linked responses; ethical issues flagged,31.0,31.0,31.0,31.0
+Claude,Anthropic,LLM,Natural Language Understanding,Privacy Focus,3500.0,Strong privacy guardrails; aligned toward safer outputs,20.0,20.0,20.0,18.0
+Hugging Face Hub,Hugging Face,LLM,Natural Language Understanding,Open Source,0.0,Large model hub; encourages reproducibility,8.0,8.0,10.0,8.0
+Mistral,Mistral.ai,LLM,Natural Language Understanding,Open Source,0.0,MIT-licensed; highly performant for local inference,16.0,16.0,16.0,14.0
+Falcon,TII (UAE Gov),LLM,Natural Language Understanding,Open Source,0.0,Apache 2.0 license; supports many languages,31.0,31.0,33.0,31.0
+BLOOM,BigScience,LLM,Natural Language Understanding,Multilingual Support,0.0,Built by researchers; strong multilingual focus,8.0,8.0,8.0,6.0
+GPT-NeoX / GPT-J,EleutherAI,LLM,Natural Language Understanding,Open Source,0.0,Decentralized open LLM alternatives,8.0,8.0,8.0,6.0
+OpenLLaMA,Berkeley/Community,LLM,Natural Language Understanding,Open Source,0.0,"Transparent, research-grade LLaMA variant",8.0,8.0,8.0,6.0
+PayPal,PayPal Holdings,Online Payments,Global Access,Mainstream Adoption	,15.0,"Popular platform with wide reach, but criticized for freezing funds & political bias.",30.0,30.0,26.0,28.0
+Stripe,Stripe Inc.,Online Payments,Global Access,Developer-Friendly,65.0,"Powerful APIs and fast payouts, widely used by devs. Not privacy-centric.",20.0,20.0,16.0,18.0
+Wise,Wise Ltd,Online Payments,Global Access,Transparent Fees,12.5,"Honest FX, clear pricing, but no E2EE or open-source features.",22.0,22.0,18.0,20.0
+BTCPay Server,BTCPay Foundation,Online Payments,Open-source,End-to-End Encrypted,10.0,"Fully decentralized, privacy-focused, suitable for ethical crypto payments.",16.0,16.0,12.0,14.0
+Mollie,Mollie B.V.,Online Payments,Global Access,Ethical Banking,40.0,"Based in EU, adheres to stricter finance laws, but lacks E2EE.",22.0,22.0,20.0,20.0
+Dwolla,Dwolla Inc.,Online Payments,Low Transaction Fees,Developer-Friendly,62.5,"US-based fast bank transfers, solid API support, but no E2EE.",22.0,22.0,20.0,20.0
+Taler,GNU Project,Online Payments,Privacy-Preserving,End-to-End Encrypted,0.0,"Digital cash system, privacy-focused, open-source and free.",10.0,10.0,8.0,8.0
+GloBee,GloBee,Online Payments,Global Access,End-to-End Encrypted,27.5,"Supports Monero and other privacy coins, crypto-friendly and international.",21.0,21.0,19.0,19.0
+Checkout.com,Checkout Ltd,Online Payments,Global Access,Developer-Friendly,100.0,"Powerful multi-currency platform with high scalability, but opaque ethics.",26.0,26.0,24.0,24.0
+Razorpay,Razorpay Software Pvt. Ltd.,Online Payments,India-Focused	,Developer-Friendly,60.0,"Fast, modern Indian gateway, great for startups, but no encryption layer.",24.0,24.0,20.0,22.0
+Slack,Salesforce,Team Chat,App Integrations,Easy to Use,60.0,"Modern chat tool with channels, search, and file sharing.",22.0,22.0,22.0,22.0
+Microsoft Teams,Microsoft,Team Chat,App Integrations,Office Integration,50.0,"Combines chat, meetings, and docs inside Microsoft ecosystem.",24.0,24.0,24.0,24.0
+Google Chat,Google,Team Chat,Email Integration,Easy to Use,36.0,Works inside Gmail and Google Workspace.,27.0,27.0,27.0,27.0
+Mattermost,Mattermost Inc.,Team Chat,Open Source,Private Deployment,20.0,"Secure chat system, ideal for internal servers.",12.0,12.0,12.0,10.0
+Rocket.Chat,Rocket.Chat,Team Chat,Open Source,Private Deployment,25.0,"Customizable messaging platform, open source.",14.0,14.0,12.0,12.0
+Zulip,Kandra Labs,Team Chat,Open Source,Easy to Use,10.0,Unique threaded messaging system.,12.0,12.0,10.0,10.0
+Discord,Discord Inc.,Team Chat,App Integrations,Voice Support,15.0,Popular with dev teams and communities.,29.0,29.0,29.0,29.0
+Flock,Flock Inc.,Team Chat,Easy to Use,Built-in Tasks,20.0,Chat + to-dos in one lightweight platform.,22.0,22.0,20.0,20.0
+Ryver,Ryver Inc.,Team Chat,App Integrations,Built-in Tasks,25.0,Mix of team chat and Trello-style task boards.,22.0,22.0,20.0,20.0
