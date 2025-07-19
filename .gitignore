@@ -2,3 +2,4 @@
 .env
 instance/
 *.rest
+__pycache__/

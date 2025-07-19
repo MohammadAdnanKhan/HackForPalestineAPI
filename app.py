@@ -3,8 +3,7 @@ from flask_cors import CORS
 import pandas as pd
 from rapidfuzz import process, fuzz
 import os
-
-from flask_sqlalchemy import SQLAlchemy
+from models import db, Feedback, Service
 
 app = Flask(__name__)
 CORS(app) 
@@ -14,23 +13,7 @@ app.config['SQLALCHEMY_DATABASE_URI'] = os.environ.get('DB_URI') or 'sqlite:///h
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 
 # SQLite instance
-db = SQLAlchemy(app)
-
-# defining models
-class Feedback(db.Model):
-    id = db.Column(db.Integer, primary_key=True, autoincrement=True)
-    
-    name = db.Column(db.String(100), nullable=False)
-    email = db.Column(db.String(100), nullable=False)
-    category = db.Column(db.String(50), nullable=False)
-    
-    field1 = db.Column(db.Text, nullable=True)
-    field2 = db.Column(db.Text, nullable=True)
-    field3 = db.Column(db.Text, nullable=True)
-    field4 = db.Column(db.Text, nullable=True)
-    
-    def __repr__(self):
-        return f"<UserSubmission {self.name}, {self.category}>"
+db.init_app(app)
 
 with app.app_context():
     # db.drop_all()
