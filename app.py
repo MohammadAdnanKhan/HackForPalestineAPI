@@ -1,13 +1,28 @@
 from flask import Flask, request, jsonify, render_template
-from flask_cors import CORS  
+from flask_cors import CORS
+from flask_limiter import Limiter
+from flask_limiter.util import get_remote_address
+from flask_limiter.errors import RateLimitExceeded
 import pandas as pd
 from rapidfuzz import process, fuzz
 import os
 from models import db, Feedback, Service
 from sqlalchemy import or_, func
+from dotenv import load_dotenv
+load_dotenv()
 
 app = Flask(__name__)
-CORS(app) 
+CORS(app)
+
+limiter = Limiter(
+    get_remote_address,
+    app=app,
+    default_limits=["100 per hour"],  # Optional global default
+)
+
+@app.errorhandler(RateLimitExceeded)
+def ratelimit_error(e):
+    return jsonify({"error": "Rate limit exceeded. Please try again later."}), 429
 
 # refer db.doc.md for 'how to use DB'
 app.config['SQLALCHEMY_DATABASE_URI'] = os.environ.get('DB_URI') or 'sqlite:///hack4pal.db'
@@ -38,10 +53,11 @@ def fuzzy_search(name, choices, threshold=72):
     name = name.lower()
     match = process.extractOne(name, choices, scorer=fuzz.token_sort_ratio)
     if (match and match[1] >= threshold):
-        return match[0]  
+        return match[0]
     return None
 
 @app.route('/search', methods=['POST'])
+@limiter.limit("160 per hour", methods=["POST"])
 def search():
     data = request.get_json()
     input_name = data.get('name', '').strip().lower()
@@ -86,8 +102,12 @@ def search():
     return jsonify({'result': 'Not in our list. There is high probability that the product is not in boycott list'}), 200
 
 @app.route('/feedback', methods=['GET', 'POST'])
+@limiter.limit("25 per hour", methods=["POST", "GET"])
 def feedback():
-    if (request.method == 'POST'):
+    if request.method == 'POST':
+        if not request.is_json:
+            return jsonify({"error": "Invalid or missing JSON"}), 400
+
         data = request.json
         category = data.get('category')
         
@@ -97,41 +117,38 @@ def feedback():
         
         # err handling
         if (not name or not email or not category):
-            return jsonify({"message": "name, email or category can't be null"}), 400
+            return jsonify({"error": "name, email or category can't be null"}), 400
 
         # default empty fields
         field1 = field2 = field3 = field4 = None
 
-        # conditional mapping based on category
-        if category == 'Content Issue':
-            field1 = data['contentIss'].get('name')
-            field2 = data['contentIss'].get('description')
-            field3 = data['contentIss'].get('type')
-            field4 = data['contentIss'].get('link')
-
-        elif category == 'Feature Request':
-            field1 = data['feature'].get('description')
-            field2 = data['feature'].get('where')
-
-        elif category == 'UI/UX Problem':
-            field1 = data['uiIss'].get('work')
-            field2 = data['uiIss'].get('wrong')
-            field3 = data['uiIss'].get('device')
-
-        elif category == 'Trustworthiness Concern':
-            field1 = data['trustConcern'].get('issueWith')
-            field2 = data['trustConcern'].get('why')
-            field3 = data['trustConcern'].get('link')
-
-        elif category == 'Other':
-            field1 = data['other'].get('message')
-            
-        else:
-            return jsonify({"message": "unexpected category"}), 400
+        # Map categories to expected fields and data keys
+        category_fields_map = {
+            "Content Issue": ("contentIss", ["name", "description", "type", "link"]),
+            "Feature Request": ("feature", ["description", "where"]),
+            "UI/UX Problem": ("uiIss", ["work", "wrong", "device"]),
+            "Trustworthiness Concern": ("trustConcern", ["issueWith", "why", "link"]),
+            "Other": ("other", ["message"])
+        }
         
-        if all(not f for f in [field1, field2, field3, field4]):
-            return jsonify({"message": "Bad request: no field was populated"}), 400
+        # Validate category
+        if category not in category_fields_map:
+            return jsonify({"error": "unexpected category"}), 400
+        
+        data_key, field_keys = category_fields_map[category]
+        sub_data = data.get(data_key, {})
+        
+        # Extract values in correct order
+        field_values = [sub_data.get(k) for k in field_keys]
+        
+        # Validate that all fields are non-empty
+        if any(not str(v).strip() for v in field_values):
+            return jsonify({"error": f"All fields must be non-empty for category '{category}'"}), 400
 
+        # Pad to exactly 4 fields
+        field_values += [None] * (4 - len(field_values))
+        field1, field2, field3, field4 = field_values[:4]
+        
         submission = Feedback(
             name=name,
             email=email,
@@ -142,18 +159,22 @@ def feedback():
             field4=field4
         )
 
-        db.session.add(submission)
-        db.session.commit()
+        try:
+            db.session.add(submission)
+            db.session.commit()
+        except Exception as e:
+            db.session.rollback()
+            app.logger.error(f"DB error: {e}")
+            return jsonify({"error": "Failed to save feedback"}), 500
 
         return jsonify({"message": "Submission saved!"}), 201
     
     # --------- GET Method ---------
     elif request.method == 'GET':
-        data = request.json
-        category = data.get('category')
+        category = request.args.get('category')
 
         if not category:
-            return jsonify({"message": "category body parameter is required"}), 400
+            return jsonify({"error": "category query parameter is required"}), 400
 
         feedbacks = Feedback.query.filter_by(category=category).all()
         
@@ -169,7 +190,7 @@ def feedback():
         field_keys = category_fields.get(category)
         
         if not field_keys:
-            return jsonify({"message": "unexpected category"}), 400
+            return jsonify({"error": "unexpected category"}), 400
     
         results = []
         for f in feedbacks:
@@ -198,6 +219,7 @@ def usage():
     return render_template('usage.html')
 
 @app.route('/service', methods=['GET'])
+@limiter.limit("160 per hour", methods=["GET"])
 def suggest_services():
     name = request.args.get('name', '').strip()
     
@@ -218,6 +240,7 @@ def suggest_services():
     } for s in matches])
 
 @app.route('/service', methods=['POST'])
+@limiter.limit("100 per hour", methods=["POST"])
 def suggest_replacements():
     data = request.json
     
@@ -317,4 +340,5 @@ def index():
 
 if __name__ == '__main__':
     port = int(os.environ.get('PORT', 5000))
-    app.run(host='0.0.0.0', port=port)
+    debug = os.environ.get('FLASK_ENV', '').lower() == 'development'
+    app.run(host='0.0.0.0', port=port, debug=debug)

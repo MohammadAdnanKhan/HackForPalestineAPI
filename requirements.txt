@@ -1,4 +1,4 @@
-﻿blinker==1.9.0
+blinker==1.9.0
 click==8.2.1
 colorama==0.4.6
 Deprecated==1.2.18
