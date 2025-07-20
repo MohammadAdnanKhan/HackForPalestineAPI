@@ -1,12 +1,13 @@
-from flask import Flask, request, jsonify, render_template
+from flask import Flask, request, jsonify, render_template, make_response
 from flask_cors import CORS
 from flask_limiter import Limiter
 from flask_limiter.util import get_remote_address
 from flask_limiter.errors import RateLimitExceeded
 import pandas as pd
 from rapidfuzz import process, fuzz
+import base64
 import os
-from models import db, Feedback, Service
+from models import db, Feedback, Service, Visitors
 from sqlalchemy import or_, func
 from dotenv import load_dotenv
 load_dotenv()
@@ -333,6 +334,28 @@ def suggest_replacements():
         "Feature_1": s.Top_B_Feature_1,
         "Feature_2": s.Top_B_Feature_2
     } for s in suggestions])
+
+@app.route('/visits', methods=['GET', 'POST'])
+@limiter.limit("100 per hour", methods=['GET'])
+@limiter.limit("5 per hour", methods=['POST'])
+def visits():
+    if request.method == 'GET':
+        count = Visitors.query.count()
+        return jsonify({"total_visits": count}), 200
+    
+    elif request.method == 'POST':
+        random_bytes = os.urandom(12)
+        visitor_id = base64.urlsafe_b64encode(random_bytes).decode('utf-8').rstrip("=")
+        
+        new_visitor = Visitors(id=visitor_id)
+        db.session.add(new_visitor)
+        db.session.commit()
+        
+        # Set the ID in a cookie (not now)
+        # response = make_response(jsonify({"visitor_id": visitor_id}), 201)
+        # response.set_cookie('visitor_id', visitor_id, httponly=True, max_age=3600*24*7)  # 1 week
+
+        return jsonify({"visitor_id": visitor_id}), 201
 
 @app.route('/')
 def index():
