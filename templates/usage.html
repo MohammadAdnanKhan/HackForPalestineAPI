@@ -126,14 +126,19 @@
 
   <div class="section">
     <h2>📤 GET /feedback</h2>
-    <p><strong>Required JSON Body Parameter:</strong> <code>category</code> (string)</p>
-    <pre><code>{
-    "category": "Content Issue"
-}</code></pre>
     <p>Returns all feedback entries matching the specified category.</p>
+    <p><strong>Query Parameters:</strong></p>
+    <ul>
+      <li><code>category</code> (string)</li>
+    </ul>
+    <p><strong>Example:</strong>
+    <pre><code>GET http://localhost:5000/feedback?category=Feature Request
+OR
+GET http://localhost:5000/feedback?category=Feature%20Request</code></pre>
+    </p>
     <p># category can be one of the follwing:
     <ul>
-      <li><code>"Content Issue"</code></li>
+      <li><code>"Content Issue" => url encoded "Content%20Issue"</code></li>
       <li><code>"Feature Request"</code></li>
       <li><code>"UI/UX Problem"</code></li>
       <li><code>"Trustworthiness Concern"</code></li>
@@ -151,6 +156,9 @@
     <ul>
       <li><code>name</code> (string) partial input string (min 3 characters recommended)</li>
     </ul>
+    <p><strong>Example:</strong>
+    <pre><code>GET http://localhost:5000/service?name=mail</code></pre>
+    </p>
     <p><strong>Response:</strong> Returns a list of services that match the name or type.</p>
     <pre><code>[
   {

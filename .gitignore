@@ -3,3 +3,4 @@
 instance/
 *.rest
 __pycache__/
+*.js
