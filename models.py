@@ -19,9 +19,7 @@ class Feedback(db.Model):
         return f"<UserSubmission {self.name}, {self.category}>"
 
 class Service(db.Model):
-    id = db.Column(db.Integer, primary_key=True, autoincrement=True)
-
-    Service = db.Column(db.String(255))
+    Service = db.Column(db.String(255), primary_key=True)
     Service_Provider_Name = db.Column(db.String(255))
     Service_Type = db.Column(db.String(100))
     Top_B_Feature_1 = db.Column(db.String(255))
