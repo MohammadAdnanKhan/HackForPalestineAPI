@@ -32,3 +32,6 @@ class Service(db.Model):
     Health_Score = db.Column(db.Float)
     Finance_Score = db.Column(db.Float)
     Tech_Score = db.Column(db.Float)
+
+class Visitors(db.Model):
+    id = db.Column(db.String(32), primary_key=True, unique=True)
